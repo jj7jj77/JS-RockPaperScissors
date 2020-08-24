@@ -1,0 +1,126 @@
+
+//query selector returns an array. it accesses the first object in 
+	//the arrary to get your buttons.
+//query selector returns an array of all matches, knowing only one match is going to exists, 
+	//we use [0] to get the one element located at index 0.
+// rock.addEventListener("click", function(){
+// alert("rock");
+// });
+
+// paper.addEventListener("click", function(){
+// alert("paper");
+// });
+
+// scissors.addEventListener("click", function(){
+// alert("scissors");
+// });
+
+var playerScore=0;
+var computerScore=0;
+
+const rock = document.getElementById("#rock");
+const paper = document.getElementById("#paper");
+const scissors = document.getElementById("#scissors");
+
+const score = document.getElementById(".score");
+const status = document.getElementById(".statusOfChoices");
+const message = document.getElementById(".message");
+
+const winnerScores = [0,0];
+var buttons = document.getElementById("buttons");
+
+
+//add event listeners to buttons
+for (let i = 0 ; i < buttons.length ; i++){
+    buttons[i].addEventListener('click', playGame);
+}
+console.log(buttons);
+function playGame(e){
+    //setup player's selection
+	
+	// e.target - is it the image or button
+    // if img, go back to button, find id
+    // if button, get id
+    debugger;
+    let player = e.target.parent;
+	
+
+
+    //setup a random number to select for computer
+    //selects a number between 0 and 1 (1 not-inclusive)
+    let computer = Math.floor(Math.random() * 3);
+
+    //if computerSelection is less than .34, computer selects rock
+    if (computer < .34){
+        computer = "rock";
+    } 
+    else if (computer <= .67){
+        computer = "paper";
+    } 
+    else {
+        computer = "scissors";
+    }
+    
+    //setup a function to compare winners and return result
+    let score = checkWinner(player, computer); //check this
+
+    //output scores to the DOM
+    if (score ===  "The Player"){
+        score += " Wins!";
+        //update score
+        winnerScores[0]++;
+    }
+
+    if (score === "The Computer"){
+        score += " Wins!";
+        winnerScores[1]++;
+    }
+
+    if (score === "Draw"){
+        score += ". It\'s a tie!"
+    }
+
+    //output score into Score DIV
+    debugger;
+    score.innerHTML = "Player: [ ' + winnerScores[0]+ ' ] Computer: [ ' + winnerScores[0] + ' ]";
+
+    //output player and computer's selections
+    messenger("Player: <strong>" + player + "</strong> Computer: <strong>" + computer + "</strong><br>" + score);
+}
+
+function messenger(selectionMessage){
+    message.innerHTML = selectionMessage;
+}
+
+function checkWinner(player, computer){
+    if (player === computer){
+        return "Draw";
+    }
+
+    if (player === "rock"){
+        if (computer === "paper"){
+            return "Computer";
+        } 
+        else {
+            return "Player";
+        }
+    }
+
+    if (player === "paper"){
+        if (computer === "scissors"){
+            return "Computer";
+        } 
+        else {
+            return "Player";
+        }
+    }
+
+    if (player === "scissors"){
+        if (computer === "rock"){
+            return "Computer";
+        } 
+        else {
+            return "Player";
+        }
+    }
+}
